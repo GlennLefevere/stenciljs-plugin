@@ -1,18 +1,30 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>org.jetbrains.plugins.template</id>
-    <name>IntelliJ Platform Plugin Template</name>
-    <vendor>JetBrains</vendor>
-
+    <id>com.github.glennlefevere.stenciljswebcomponents</id>
+    <name>stenciljs-web-components</name>
+    <vendor email="glenn.lefevere@liantis.be">Glenn Lefevere</vendor>
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="org.jetbrains.plugins.template.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <completion.contributor language="HTML"
+                                implementationClass="com.github.glennlefevere.stenciljswebcomponents.WebComponentContributor"/>
+
+        <xml.elementDescriptorProvider
+                order="first"
+                implementation="com.github.glennlefevere.stenciljswebcomponents.WebComponentDescriptorsProvider"/>
+
+        <xml.attributeDescriptorsProvider
+                order="first"
+                implementation="com.github.glennlefevere.stenciljswebcomponents.WebComponentAttributeDescriptorsProvider"/>
+
+        <html.attributeValueProvider implementation=""/>
+
+        <postStartupActivity implementation="com.github.glennlefevere.stenciljswebcomponents.startup.StartupListener"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="org.jetbrains.plugins.template.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+
     </applicationListeners>
 </idea-plugin>
