@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AngularApplication {
     private static final Logger log = Logger.getInstance(AngularApplication.class);
@@ -40,11 +40,17 @@ public class AngularApplication {
 
     private Optional<Path> getPackageJson(String projectBasePath) throws IOException {
         Path path = Paths.get(projectBasePath);
-        return Files.walk(path)
-                .filter(Files::isRegularFile)
-                .filter(file -> !file.toAbsolutePath().toString().toLowerCase().contains("node_modules"))
-                .filter(file -> file.toAbsolutePath().toString().toLowerCase().endsWith("package.json"))
-                .findAny();
+        Optional<Path> pathOptional = Optional.empty();
+
+        try (Stream<Path> files = Files.walk(path)) {
+            pathOptional = files.filter(Files::isRegularFile)
+                    .filter(file -> !file.toAbsolutePath().toString().toLowerCase().contains("node_modules"))
+                    .filter(file -> file.toAbsolutePath().toString().toLowerCase().endsWith("package.json"))
+                    .findAny();
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return pathOptional;
     }
 
 }

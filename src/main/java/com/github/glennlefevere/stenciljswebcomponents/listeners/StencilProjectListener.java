@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StencilProjectListener {
 
@@ -94,12 +95,17 @@ public class StencilProjectListener {
         Set<Path> allStencilModules = getAllModulesUsingStencil(projectBasePath);
         List<Path> allStencilDocs = new ArrayList<>();
 
+        assert allStencilModules != null;
         for (Path stencilModule : allStencilModules) {
-            allStencilDocs.addAll(Files.walk(stencilModule.getParent())
-                    .filter(ModulePathUtil::isJsonFile)
-                    .filter(ModulePathUtil::isStencilDocsFile)
-                    .toList()
-            );
+            try (Stream<Path> files = Files.walk(stencilModule.getParent())) {
+                allStencilDocs.addAll(files
+                        .filter(ModulePathUtil::isJsonFile)
+                        .filter(ModulePathUtil::isStencilDocsFile)
+                        .toList()
+                );
+            } catch (Exception e) {
+                log.error(e);
+            }
         }
 
         return allStencilDocs;
@@ -107,11 +113,17 @@ public class StencilProjectListener {
 
     private Set<Path> getAllModulesUsingStencil(String projectBasePath) throws IOException {
         Path path = Paths.get(projectBasePath);
-        return Files.walk(path)
-                .filter(Files::isRegularFile)
-                .filter(ModulePathUtil::isPackageJsonOfModule)
-                .filter(ModulePathUtil::isStencilModule)
-                .collect(Collectors.toSet());
+        Set<Path> result = new HashSet<Path>();
+
+        try (Stream<Path> files = Files.walk(path)) {
+            result = files.filter(Files::isRegularFile)
+                    .filter(ModulePathUtil::isPackageJsonOfModule)
+                    .filter(ModulePathUtil::isStencilModule)
+                    .collect(Collectors.toSet());
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return result;
     }
 
 }

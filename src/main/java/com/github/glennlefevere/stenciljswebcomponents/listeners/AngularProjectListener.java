@@ -2,14 +2,16 @@ package com.github.glennlefevere.stenciljswebcomponents.listeners;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManagerListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class AngularProjectListener {
     private static final Logger log = Logger.getInstance(AngularProjectListener.class);
@@ -43,8 +45,14 @@ public class AngularProjectListener {
 
     private Optional<Path> getPackageJson(String projectBasePath) throws IOException {
         Path path = Paths.get(projectBasePath);
-        return Files.find(path, 1, (p, b) -> p.getFileName().toString().equalsIgnoreCase("package.json"))
-                .findAny();
+        Optional<Path> pathOptional = Optional.empty();
+
+        try (Stream<Path> files = Files.find(path, 1, (p, b) -> p.getFileName().toString().equalsIgnoreCase("package.json"))) {
+            pathOptional = files.findAny();
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return pathOptional;
     }
 
 }

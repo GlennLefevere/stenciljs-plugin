@@ -4,7 +4,6 @@ import com.github.glennlefevere.stenciljswebcomponents.listeners.AngularProjectL
 import com.github.glennlefevere.stenciljswebcomponents.listeners.StencilProjectListener;
 import com.github.glennlefevere.stenciljswebcomponents.model.StencilDocComponent;
 import com.github.glennlefevere.stenciljswebcomponents.model.StencilMergedDoc;
-import com.google.gson.Gson;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.psi.xml.XmlTag;
@@ -15,8 +14,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static com.github.glennlefevere.stenciljswebcomponents.angular.AngularAttributeType.*;
 
