@@ -12,6 +12,7 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import org.apache.commons.collections.CollectionUtils;
+import org.intellij.html.RelaxedHtmlFromRngElementDescriptor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,6 +25,8 @@ public class WebComponentDescriptorsProvider implements XmlElementDescriptorProv
 
         final XmlNSDescriptor nsDescriptor = tag.getNSDescriptor(tag.getNamespace(), false);
         final XmlElementDescriptor descriptor = nsDescriptor != null ? nsDescriptor.getElementDescriptor(tag) : null;
+        final RelaxedHtmlFromRngElementDescriptor ds = null;
+
         if (descriptor != null && !(descriptor instanceof AnyXmlElementDescriptor)) {
             return null;
         }

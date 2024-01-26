@@ -7,6 +7,8 @@ public class StencilDocComponent {
     public List<StencilDocComponentProps> props;
     public List<StencilDocComponentEvents> events;
 
+    public List<StencilDocComponentSlots> slots;
+
     public String getTag() {
         return tag;
     }
@@ -29,5 +31,14 @@ public class StencilDocComponent {
 
     public void setEvents(List<StencilDocComponentEvents> events) {
         this.events = events;
+    }
+
+
+    public List<StencilDocComponentSlots> getSlots() {
+        return slots;
+    }
+
+    public void setSlots(List<StencilDocComponentSlots> events) {
+        this.slots = events;
     }
 }
