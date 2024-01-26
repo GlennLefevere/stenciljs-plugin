@@ -91,7 +91,7 @@ public class StencilProjectListener {
         return mergedDoc;
     }
 
-    private List<Path> getAllStencilDocs(String projectBasePath) throws IOException {
+    private List<Path> getAllStencilDocs(String projectBasePath) {
         Set<Path> allStencilModules = getAllModulesUsingStencil(projectBasePath);
         List<Path> allStencilDocs = new ArrayList<>();
 
@@ -111,7 +111,7 @@ public class StencilProjectListener {
         return allStencilDocs;
     }
 
-    private Set<Path> getAllModulesUsingStencil(String projectBasePath) throws IOException {
+    private Set<Path> getAllModulesUsingStencil(String projectBasePath) {
         Path path = Paths.get(projectBasePath);
         Set<Path> result = new HashSet<Path>();
 
