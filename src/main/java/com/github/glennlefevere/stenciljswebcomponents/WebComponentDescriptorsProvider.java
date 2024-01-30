@@ -1,8 +1,8 @@
 package com.github.glennlefevere.stenciljswebcomponents;
 
 import com.github.glennlefevere.stenciljswebcomponents.descriptors.ExtendedHtmlElementDescriptorImpl;
-import com.github.glennlefevere.stenciljswebcomponents.model.StencilMergedDoc;
 import com.github.glennlefevere.stenciljswebcomponents.listeners.StencilProjectListener;
+import com.github.glennlefevere.stenciljswebcomponents.model.StencilMergedDoc;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.psi.html.HtmlTag;
@@ -13,7 +13,6 @@ import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.XmlNSDescriptor;
 import com.intellij.xml.impl.schema.AnyXmlElementDescriptor;
 import org.apache.commons.collections.CollectionUtils;
-import org.intellij.html.RelaxedHtmlFromRngElementDescriptor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
