@@ -1,5 +1,7 @@
 package com.github.glennlefevere.stenciljswebcomponents;
 
+import com.github.glennlefevere.stenciljswebcomponents.descriptors.ExtendedHtmlAttributeDescriptorImpl;
+import com.github.glennlefevere.stenciljswebcomponents.model.StencilMergedDoc;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.html.dtd.HtmlNSDescriptorImpl;
 import com.intellij.psi.impl.source.xml.XmlDescriptorUtil;
@@ -12,13 +14,18 @@ import com.intellij.xml.XmlNSDescriptor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class StencilTagDescriptor implements XmlElementDescriptor {
     private final String myName;
     private final PsiElement declaration;
 
-    public StencilTagDescriptor(@NotNull XmlTag tag) {
-        myName = tag.getLocalName();
-        declaration = tag.getOriginalElement();
+    private final StencilMergedDoc mergedDoc;
+
+    public StencilTagDescriptor(@NotNull XmlTag tag, StencilMergedDoc mergedDoc) {
+        this.myName = tag.getLocalName();
+        this.declaration = tag.getOriginalElement();
+        this.mergedDoc = mergedDoc;
     }
 
 
@@ -49,7 +56,13 @@ public class StencilTagDescriptor implements XmlElementDescriptor {
 
     @Override
     public @Nullable XmlAttributeDescriptor getAttributeDescriptor(String attributeName, @Nullable XmlTag context) {
-        return HtmlNSDescriptorImpl.getCommonAttributeDescriptor(attributeName, context);
+        XmlAttributeDescriptor descriptor = HtmlNSDescriptorImpl.getCommonAttributeDescriptor(attributeName, context);
+
+        if(!Objects.equals(attributeName, "slot") || descriptor == null) {
+            return descriptor;
+        }
+
+        return new ExtendedHtmlAttributeDescriptorImpl(descriptor, false, context, this.mergedDoc);
     }
 
     @Override

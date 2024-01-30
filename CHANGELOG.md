@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+### Added
+
+- Intellisense for assigning slots of a web component
+- Validation of assigned slot
+
+### Fixed
+
+- Removed random error log
+
 ## [2.0.0] - 2024-01-26
 
 ### Changed
