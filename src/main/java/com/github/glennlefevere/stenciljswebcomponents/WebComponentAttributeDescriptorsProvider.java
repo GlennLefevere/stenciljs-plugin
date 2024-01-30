@@ -53,10 +53,6 @@ public class WebComponentAttributeDescriptorsProvider implements XmlAttributeDes
             return null;
         }
 
-        if(attributeName.equalsIgnoreCase("slot")) {
-            log.error(attributeName + " " + context.getName());
-        }
-
         return mergedDoc.getComponents().stream()
                 .filter(comp -> comp.getTag().equals(context.getName()))
                 .map(comp -> getAllAttributeDescriptors(comp, context))

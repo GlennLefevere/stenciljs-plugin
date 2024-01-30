@@ -6,8 +6,10 @@ import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.html.HtmlTag;
+import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlToken;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public class CompletionTypeUtil {
@@ -22,25 +24,25 @@ public class CompletionTypeUtil {
     }
 
     public static StencilDocComponent isAttributeValueTokenOfSlotAndChildOfStencilElement(CompletionParameters parameters, StencilMergedDoc mergedDoc) {
-        if(parameters.getPosition() instanceof XmlToken token) {
-            if(token.getTokenType().toString().equalsIgnoreCase("XML_ATTRIBUTE_VALUE_TOKEN") && token.getParent().getParent().getFirstChild().getText().equalsIgnoreCase("slot")) {
-                return traverseParentsToStencilElement(token.getParent(), mergedDoc);
+        if (parameters.getPosition() instanceof XmlToken token) {
+            if (token.getTokenType().toString().equalsIgnoreCase("XML_ATTRIBUTE_VALUE_TOKEN") && token.getParent().getParent().getFirstChild().getText().equalsIgnoreCase("slot")) {
+                return traverseParentsToStencilElement(token.getParent().getParent(), mergedDoc);
             }
         }
 
         return null;
     }
 
-    private static StencilDocComponent traverseParentsToStencilElement(PsiElement token, StencilMergedDoc mergedDoc) {
-        if(token != null && !(token instanceof HtmlTag)) {
+    public static StencilDocComponent traverseParentsToStencilElement(PsiElement token, StencilMergedDoc mergedDoc) {
+        if (token != null && !(token instanceof HtmlTag)) {
             return traverseParentsToStencilElement(token.getParent(), mergedDoc);
-        } else if(token != null) {
+        } else if (token != null) {
             HtmlTag tag = (HtmlTag) token;
             Optional<StencilDocComponent> optionalStencilDocComponent = mergedDoc.getComponents().stream()
                     .filter((c) -> c.tag.equalsIgnoreCase(tag.getName()))
                     .findAny();
 
-            if (optionalStencilDocComponent.isPresent()) {
+            if (optionalStencilDocComponent.isPresent() && Arrays.stream(tag.getAttributes()).map(XmlAttribute::getName).noneMatch(n -> n.equalsIgnoreCase("slot"))) {
                 StencilDocComponent stencilDocComponent = optionalStencilDocComponent.get();
                 if (!stencilDocComponent.slots.isEmpty()) {
                     return stencilDocComponent;

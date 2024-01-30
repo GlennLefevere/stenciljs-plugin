@@ -103,7 +103,6 @@ public class StencilStandardTagDescriptor extends HtmlElementDescriptorImpl {
     static XmlAttributeDescriptor mergeWithStencilDescriptorIfPossible(@Nullable XmlAttributeDescriptor descriptor,
                                                                        String attributeName,
                                                                        @Nullable XmlTag context) {
-        log.error(attributeName);
         return descriptor;
     }
 
