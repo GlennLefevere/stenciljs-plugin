@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed pesky error in plugin.xml
+
 ## [2.1.0] - 2024-01-30
 
 ### Added

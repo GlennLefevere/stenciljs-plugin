@@ -19,8 +19,6 @@
                 order="first"
                 implementation="com.github.glennlefevere.stenciljswebcomponents.WebComponentAttributeDescriptorsProvider"/>
 
-        <html.attributeValueProvider implementation=""/>
-
         <postStartupActivity implementation="com.github.glennlefevere.stenciljswebcomponents.startup.StartupListener"/>
     </extensions>
 
