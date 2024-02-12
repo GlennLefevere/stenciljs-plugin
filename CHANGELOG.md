@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2.1.0] - 2024-01-30
+
 ### Added
 
 - Intellisense for assigning slots of a web component
@@ -67,7 +69,8 @@
 - Angular detection and code completion for the component attributes in angular style
 - Detection of file changes in the NodeJS module
 
-[Unreleased]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v1.0.5...v2.0.0
 [1.0.5]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v1.0.3...v1.0.4
