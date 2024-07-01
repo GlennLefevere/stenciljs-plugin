@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Removed until version
+
 ## [2.1.1] - 2024-02-12
 
 ### Fixed
