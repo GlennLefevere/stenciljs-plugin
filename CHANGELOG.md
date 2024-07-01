@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2.1.2] - 2024-07-01
+
 ### Changed
 
 - Removed until version
@@ -79,7 +81,8 @@
 - Angular detection and code completion for the component attributes in angular style
 - Detection of file changes in the NodeJS module
 
-[Unreleased]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.1...HEAD
+[Unreleased]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.2...HEAD
+[2.1.2]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v1.0.5...v2.0.0
