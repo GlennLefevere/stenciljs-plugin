@@ -1,8 +1,8 @@
 package com.github.glennlefevere.stenciljswebcomponents;
 
 import com.github.glennlefevere.stenciljswebcomponents.descriptors.ExtendedHtmlElementDescriptorImpl;
-import com.github.glennlefevere.stenciljswebcomponents.listeners.StencilProjectListener;
 import com.github.glennlefevere.stenciljswebcomponents.model.StencilMergedDoc;
+import com.github.glennlefevere.stenciljswebcomponents.services.StencilDocService;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.psi.html.HtmlTag;
@@ -28,7 +28,7 @@ public class WebComponentDescriptorsProvider implements XmlElementDescriptorProv
         final XmlNSDescriptor nsDescriptor = tag.getNSDescriptor(tag.getNamespace(), false);
         final XmlElementDescriptor descriptor = nsDescriptor != null ? nsDescriptor.getElementDescriptor(tag) : null;
 
-        StencilMergedDoc mergedDoc = StencilProjectListener.INSTANCE.getStencilMergedDocForProject(tag.getProject());
+        StencilMergedDoc mergedDoc = StencilDocService.getInstance(tag.getProject()).getMergedDoc();
 
         if (descriptor != null && !(descriptor instanceof AnyXmlElementDescriptor)) {
             if(descriptor instanceof HtmlElementDescriptorImpl htmlElementDescriptor) {
