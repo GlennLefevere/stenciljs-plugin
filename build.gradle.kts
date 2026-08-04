@@ -141,6 +141,13 @@ tasks {
         gradleVersion = properties("gradleVersion").get()
     }
 
+    // This project currently has no test sources. The IntelliJ instrumentation task fails
+    // on the empty test output directory, so keep test instrumentation disabled until tests
+    // are added.
+    named("instrumentTestCode") {
+        enabled = false
+    }
+
     publishPlugin {
         dependsOn("patchChangelog")
     }
