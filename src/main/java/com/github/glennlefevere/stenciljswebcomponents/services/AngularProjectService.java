@@ -5,6 +5,7 @@ import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.concurrency.AppExecutorUtil;
 import org.jetbrains.annotations.NotNull;
@@ -43,8 +44,8 @@ public final class AngularProjectService {
     }
 
     private boolean detectAngularProject() {
-        VirtualFile baseDirectory = project.getBaseDir();
+        VirtualFile baseDirectory = ProjectUtil.guessProjectDir(project);
         VirtualFile packageJson = baseDirectory == null ? null : baseDirectory.findChild("package.json");
-        return packageJson != null && ModulePathUtil.containsText(packageJson, "@angular/core");
+        return ModulePathUtil.containsText(packageJson, "@angular/core");
     }
 }

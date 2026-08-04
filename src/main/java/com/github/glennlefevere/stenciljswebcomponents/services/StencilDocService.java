@@ -9,6 +9,7 @@ import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.openapi.vfs.newvfs.BulkFileListener;
@@ -49,7 +50,7 @@ public final class StencilDocService {
     public StencilDocService(@NotNull Project project) {
         this.project = project;
 
-        project.getMessageBus().connect().subscribe(VirtualFileManager.VFS_CHANGES, new BulkFileListener() {
+        project.getMessageBus().connect(project).subscribe(VirtualFileManager.VFS_CHANGES, new BulkFileListener() {
             @Override
             public void after(@NotNull java.util.List<? extends VFileEvent> events) {
                 if (events.stream()
@@ -122,7 +123,7 @@ public final class StencilDocService {
         // A dependency directory can be excluded from the index in some project
         // configurations. In that case, inspect only the direct dependency roots as
         // a bounded VFS fallback; never fall back to walking the whole project.
-        VirtualFile baseDirectory = project.getBaseDir();
+        VirtualFile baseDirectory = ProjectUtil.guessProjectDir(project);
         if (baseDirectory != null) {
             addFallbackPackages(baseDirectory.findChild("node_modules"), packageJsons);
             addFallbackPackages(baseDirectory.findChild("dist"), packageJsons);
@@ -204,12 +205,12 @@ public final class StencilDocService {
     }
 
     private boolean isPotentialStencilFile(@Nullable VirtualFile file) {
-        return file != null && ModulePathUtil.isJsonFile(file) &&
+        return ModulePathUtil.isJsonFile(file) &&
                 ModulePathUtil.isInDependencyDirectory(file) && isUnderProject(file);
     }
 
     private boolean isUnderProject(@NotNull VirtualFile file) {
-        VirtualFile baseDirectory = project.getBaseDir();
+        VirtualFile baseDirectory = ProjectUtil.guessProjectDir(project);
         return baseDirectory != null && isUnder(file, baseDirectory);
     }
 

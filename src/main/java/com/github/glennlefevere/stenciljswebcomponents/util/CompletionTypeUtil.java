@@ -34,10 +34,7 @@ public class CompletionTypeUtil {
     }
 
     public static StencilDocComponent traverseParentsToStencilElement(PsiElement token, StencilMergedDoc mergedDoc) {
-        if (token != null && !(token instanceof HtmlTag)) {
-            return traverseParentsToStencilElement(token.getParent(), mergedDoc);
-        } else if (token != null) {
-            HtmlTag tag = (HtmlTag) token;
+        if (token instanceof HtmlTag tag) {
             Optional<StencilDocComponent> optionalStencilDocComponent = mergedDoc.getComponents().stream()
                     .filter((c) -> c.tag.equalsIgnoreCase(tag.getName()))
                     .findAny();
@@ -50,6 +47,8 @@ public class CompletionTypeUtil {
             } else {
                 return traverseParentsToStencilElement(token.getParent(), mergedDoc);
             }
+        } else if (token != null) {
+            return traverseParentsToStencilElement(token.getParent(), mergedDoc);
         }
 
         return null;

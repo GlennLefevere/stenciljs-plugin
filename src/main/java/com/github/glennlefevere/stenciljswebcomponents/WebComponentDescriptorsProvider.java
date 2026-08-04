@@ -30,8 +30,8 @@ public class WebComponentDescriptorsProvider implements XmlElementDescriptorProv
 
         StencilMergedDoc mergedDoc = StencilDocService.getInstance(tag.getProject()).getMergedDoc();
 
-        if (descriptor != null && !(descriptor instanceof AnyXmlElementDescriptor)) {
-            if(descriptor instanceof HtmlElementDescriptorImpl htmlElementDescriptor) {
+        if (!(descriptor instanceof AnyXmlElementDescriptor)) {
+            if (descriptor instanceof HtmlElementDescriptorImpl htmlElementDescriptor) {
                 if(mergedDoc != null && !CollectionUtils.isEmpty(mergedDoc.getComponents())) {
                     try {
                         Field field = htmlElementDescriptor.getClass().getDeclaredField("myRelaxed");
@@ -42,7 +42,9 @@ public class WebComponentDescriptorsProvider implements XmlElementDescriptorProv
                     }
                 }
             }
-            return null;
+            if (descriptor != null) {
+                return null;
+            }
         }
 
 
