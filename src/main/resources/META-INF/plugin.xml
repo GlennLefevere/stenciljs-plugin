@@ -19,10 +19,8 @@
                 order="first"
                 implementation="com.github.glennlefevere.stenciljswebcomponents.WebComponentAttributeDescriptorsProvider"/>
 
-        <postStartupActivity implementation="com.github.glennlefevere.stenciljswebcomponents.startup.StartupListener"/>
+        <backgroundPostStartupActivity
+                implementation="com.github.glennlefevere.stenciljswebcomponents.startup.StartupListener"/>
     </extensions>
 
-    <applicationListeners>
-
-    </applicationListeners>
 </idea-plugin>
