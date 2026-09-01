@@ -41,7 +41,7 @@ public class CompletionTypeUtil {
 
             if (optionalStencilDocComponent.isPresent() && Arrays.stream(tag.getAttributes()).map(XmlAttribute::getName).noneMatch(n -> n.equalsIgnoreCase("slot"))) {
                 StencilDocComponent stencilDocComponent = optionalStencilDocComponent.get();
-                if (!stencilDocComponent.slots.isEmpty()) {
+                if (stencilDocComponent.getSlots() != null && !stencilDocComponent.getSlots().isEmpty()) {
                     return stencilDocComponent;
                 }
             } else {

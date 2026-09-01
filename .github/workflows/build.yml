@@ -128,6 +128,27 @@ jobs:
         with:
           files: ${{ github.workspace }}/build/reports/kover/report.xml
 
+  testIntellij2026:
+    name: Test on IntelliJ IDEA 2026.2
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Run tests on IntelliJ IDEA 2026.2
+        run: ./gradlew testIde2026_2
+
   # Run Qodana inspections and provide report
   inspectCode:
     name: Inspect code

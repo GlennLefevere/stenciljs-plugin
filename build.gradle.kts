@@ -1,6 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.gradle.process.CommandLineArgumentProvider
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 fun properties(key: String) = providers.gradleProperty(key)
@@ -34,6 +35,7 @@ dependencies {
         })
         testFramework(TestFrameworkType.Platform)
     }
+    testImplementation("junit:junit:4.13.2")
     // implementation(libs.annotations)
 }
 
@@ -136,16 +138,15 @@ val runIdeForUiTests by intellijPlatformTesting.runIde.registering {
     }
 }
 
+val testIde2026_2 by intellijPlatformTesting.testIde.registering {
+    type = IntelliJPlatformType.IntellijIdeaUltimate
+    version = "2026.2"
+    testFramework(TestFrameworkType.Platform)
+}
+
 tasks {
     wrapper {
         gradleVersion = properties("gradleVersion").get()
-    }
-
-    // This project currently has no test sources. The IntelliJ instrumentation task fails
-    // on the empty test output directory, so keep test instrumentation disabled until tests
-    // are added.
-    named("instrumentTestCode") {
-        enabled = false
     }
 
     publishPlugin {
