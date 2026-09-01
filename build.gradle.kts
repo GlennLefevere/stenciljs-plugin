@@ -63,6 +63,11 @@ qodana {
 
 // Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
 kover {
+    currentProject {
+        instrumentation {
+            disabledForTestTasks.add("testIde2026_2")
+        }
+    }
     reports {
         total {
             xml {
@@ -140,8 +145,8 @@ val runIdeForUiTests by intellijPlatformTesting.runIde.registering {
 
 val testIde2026_2 by intellijPlatformTesting.testIde.registering {
     type = IntelliJPlatformType.IntellijIdeaUltimate
-    version = "2026.2"
-    testFramework(TestFrameworkType.Platform)
+    version = "2026.2.1"
+    testFramework(TestFrameworkType.Platform, "262.9437.185")
 }
 
 tasks {

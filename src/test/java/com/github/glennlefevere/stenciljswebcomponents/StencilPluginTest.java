@@ -4,6 +4,9 @@ import com.github.glennlefevere.stenciljswebcomponents.descriptors.ExtendedHtmlA
 import com.github.glennlefevere.stenciljswebcomponents.descriptors.ExtendedHtmlElementDescriptorImpl;
 import com.github.glennlefevere.stenciljswebcomponents.model.StencilMergedDoc;
 import com.github.glennlefevere.stenciljswebcomponents.services.StencilDocService;
+import com.github.glennlefevere.stenciljswebcomponents.startup.StartupListener;
+import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.startup.ProjectActivity;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.html.dtd.HtmlNSDescriptorImpl;
 import com.intellij.psi.xml.XmlAttribute;
@@ -96,6 +99,14 @@ public class StencilPluginTest extends LightPlatformCodeInsightFixture4TestCase 
     @Test
     public void testLoadsMergedDocumentation() {
         assertTrue(hasFixtureComponent());
+    }
+
+    @Test
+    public void testRegistersBackgroundStartupActivity() {
+        ExtensionPointName<ProjectActivity> extensionPoint =
+                ExtensionPointName.create("com.intellij.backgroundPostStartupActivity");
+
+        assertTrue(extensionPoint.getExtensionList().stream().anyMatch(StartupListener.class::isInstance));
     }
 
     @Test
