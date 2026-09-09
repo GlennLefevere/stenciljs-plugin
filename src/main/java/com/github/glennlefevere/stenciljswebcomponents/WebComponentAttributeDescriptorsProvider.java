@@ -1,9 +1,9 @@
 package com.github.glennlefevere.stenciljswebcomponents;
 
-import com.github.glennlefevere.stenciljswebcomponents.listeners.AngularProjectListener;
-import com.github.glennlefevere.stenciljswebcomponents.listeners.StencilProjectListener;
 import com.github.glennlefevere.stenciljswebcomponents.model.StencilDocComponent;
 import com.github.glennlefevere.stenciljswebcomponents.model.StencilMergedDoc;
+import com.github.glennlefevere.stenciljswebcomponents.services.AngularProjectService;
+import com.github.glennlefevere.stenciljswebcomponents.services.StencilDocService;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.psi.xml.XmlTag;
@@ -25,7 +25,7 @@ public class WebComponentAttributeDescriptorsProvider implements XmlAttributeDes
         if (context == null || DumbService.isDumb(context.getProject())) {
             return new XmlAttributeDescriptor[0];
         }
-        StencilMergedDoc mergedDoc = StencilProjectListener.INSTANCE.getStencilMergedDocForProject(context.getProject());
+        StencilMergedDoc mergedDoc = StencilDocService.getInstance(context.getProject()).getMergedDoc();
         if (mergedDoc == null || mergedDoc.getComponents() == null) {
             return null;
         }
@@ -48,7 +48,7 @@ public class WebComponentAttributeDescriptorsProvider implements XmlAttributeDes
             return null;
         }
 
-        StencilMergedDoc mergedDoc = StencilProjectListener.INSTANCE.getStencilMergedDocForProject(context.getProject());
+        StencilMergedDoc mergedDoc = StencilDocService.getInstance(context.getProject()).getMergedDoc();
         if (mergedDoc == null || mergedDoc.getComponents() == null) {
             return null;
         }
@@ -66,14 +66,14 @@ public class WebComponentAttributeDescriptorsProvider implements XmlAttributeDes
 
         component.getProps().forEach(prop -> {
             descriptors.add(new StencilAttributeDescriptor(prop.name, REGULAR, tag, prop.required, prop.defaultValue, prop.values));
-            if (AngularProjectListener.INSTANCE.isAngularProject(tag.getProject())) {
+            if (AngularProjectService.getInstance(tag.getProject()).isAngularProject()) {
                 descriptors.add(new StencilAttributeDescriptor(prop.name, PROPERTY_BINDING, tag, prop.required, prop.defaultValue, prop.values));
             }
         });
 
         component.getEvents().forEach(event -> {
             descriptors.add(new StencilAttributeDescriptor(event.event, REGULAR, tag, event.detail));
-            if (AngularProjectListener.INSTANCE.isAngularProject(tag.getProject())) {
+            if (AngularProjectService.getInstance(tag.getProject()).isAngularProject()) {
                 descriptors.add(new StencilAttributeDescriptor(event.event, EVENT, tag, event.detail));
             }
         });

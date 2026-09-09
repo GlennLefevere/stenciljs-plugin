@@ -8,7 +8,6 @@ import com.intellij.psi.impl.source.html.dtd.HtmlAttributeDescriptorImpl;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.XmlAttributeDescriptor;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class ExtendedHtmlAttributeDescriptorImpl extends HtmlAttributeDescriptor
 
     @Override
     public boolean isEnumerated() {
-        if(this.stencilDocComponent != null && !CollectionUtils.isEmpty(this.stencilDocComponent.getSlots())) {
+        if (hasStencilSlots()) {
             return true;
         }
 
@@ -39,11 +38,17 @@ public class ExtendedHtmlAttributeDescriptorImpl extends HtmlAttributeDescriptor
     @Override
     public String validateValue(XmlElement context, String value) {
         XmlElement parent = (XmlElement) context.getParent();
-        if(parent.getText().contains("slot") && this.stencilDocComponent != null && !CollectionUtils.isEmpty(this.stencilDocComponent.getSlots())) {
+        if (parent.getText().contains("slot") && hasStencilSlots()) {
             List<String> slotNames = this.stencilDocComponent.getSlots().stream().map(s -> s.name).toList();
             boolean result = slotNames.stream().anyMatch(name -> name.equalsIgnoreCase(value));
             return result ? null : "Slot value should be one of " + String.join(", ", slotNames);
         }
         return super.validateValue(context, value);
+    }
+
+    private boolean hasStencilSlots() {
+        return this.stencilDocComponent != null &&
+                this.stencilDocComponent.getSlots() != null &&
+                !this.stencilDocComponent.getSlots().isEmpty();
     }
 }

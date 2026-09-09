@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.meta.PsiPresentableMetaData;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ui.UIUtil;
+import com.intellij.ui.JBColor;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import org.jetbrains.annotations.Nls;
@@ -117,7 +117,7 @@ public class StencilAttributeDescriptor extends BasicXmlAttributeDescriptor impl
 
     @Override
     public @Nullable Icon getIcon() {
-        String dark = UIUtil.isUnderDarcula() ? "_dark" : "";
+        String dark = JBColor.isBright() ? "" : "_dark";
         URL url = IconUtil.class.getClassLoader().getResource("preview_icon" + dark + ".png");
         if (url != null) {
             return new ImageIcon(url);

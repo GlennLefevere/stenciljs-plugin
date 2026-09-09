@@ -34,22 +34,21 @@ public class CompletionTypeUtil {
     }
 
     public static StencilDocComponent traverseParentsToStencilElement(PsiElement token, StencilMergedDoc mergedDoc) {
-        if (token != null && !(token instanceof HtmlTag)) {
-            return traverseParentsToStencilElement(token.getParent(), mergedDoc);
-        } else if (token != null) {
-            HtmlTag tag = (HtmlTag) token;
+        if (token instanceof HtmlTag tag) {
             Optional<StencilDocComponent> optionalStencilDocComponent = mergedDoc.getComponents().stream()
                     .filter((c) -> c.tag.equalsIgnoreCase(tag.getName()))
                     .findAny();
 
             if (optionalStencilDocComponent.isPresent() && Arrays.stream(tag.getAttributes()).map(XmlAttribute::getName).noneMatch(n -> n.equalsIgnoreCase("slot"))) {
                 StencilDocComponent stencilDocComponent = optionalStencilDocComponent.get();
-                if (!stencilDocComponent.slots.isEmpty()) {
+                if (stencilDocComponent.getSlots() != null && !stencilDocComponent.getSlots().isEmpty()) {
                     return stencilDocComponent;
                 }
             } else {
                 return traverseParentsToStencilElement(token.getParent(), mergedDoc);
             }
+        } else if (token != null) {
+            return traverseParentsToStencilElement(token.getParent(), mergedDoc);
         }
 
         return null;

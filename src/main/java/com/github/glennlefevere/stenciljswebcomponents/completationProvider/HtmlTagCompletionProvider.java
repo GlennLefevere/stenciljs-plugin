@@ -1,8 +1,8 @@
 package com.github.glennlefevere.stenciljswebcomponents.completationProvider;
 
-import com.github.glennlefevere.stenciljswebcomponents.listeners.StencilProjectListener;
 import com.github.glennlefevere.stenciljswebcomponents.model.StencilDocComponent;
 import com.github.glennlefevere.stenciljswebcomponents.model.StencilMergedDoc;
+import com.github.glennlefevere.stenciljswebcomponents.services.StencilDocService;
 import com.github.glennlefevere.stenciljswebcomponents.util.CompletionTypeUtil;
 import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionProvider;
@@ -23,7 +23,7 @@ public class HtmlTagCompletionProvider extends CompletionProvider<CompletionPara
                                   @NotNull CompletionResultSet completionResultSet) {
 
 
-        StencilMergedDoc mergedDoc = StencilProjectListener.INSTANCE.getStencilMergedDocForProject(parameters.getOriginalFile().getProject());
+        StencilMergedDoc mergedDoc = StencilDocService.getInstance(parameters.getOriginalFile().getProject()).getMergedDoc();
         if (CompletionTypeUtil.isTag(parameters) && mergedDoc != null && mergedDoc.getComponents() != null) {
             completionResultSet.addAllElements(
                     mergedDoc.getComponents().stream()

@@ -6,7 +6,12 @@
 
 ### Changed
 
-- Removed until version
+- Retained project-scoped services, indexed discovery, VFS access, and non-blocking refreshes.
+
+### Fixed
+
+- Restored Stencil documentation loading when a project opens.
+- Restored runtime compatibility with IntelliJ IDEA 2026.2 by removing the inaccessible Commons Collections dependency.
 
 ## [2.1.1] - 2024-02-12
 
