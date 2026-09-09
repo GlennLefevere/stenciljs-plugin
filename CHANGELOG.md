@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2.1.3] - 2026-09-09
+
 ### Changed
 
 - Retained project-scoped services, indexed discovery, VFS access, and non-blocking refreshes.
@@ -84,7 +86,8 @@
 - Angular detection and code completion for the component attributes in angular style
 - Detection of file changes in the NodeJS module
 
-[Unreleased]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.1...HEAD
+[Unreleased]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.3...HEAD
+[2.1.3]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.1...v2.1.3
 [2.1.1]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/GlennLefevere/stenciljs-plugin/compare/v1.0.5...v2.0.0
